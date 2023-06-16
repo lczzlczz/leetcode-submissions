@@ -13,17 +13,23 @@
  */
 
 function inorderTraversal(root: TreeNode | null): number[] {
+  if (root === null) return [];
+  
   let seq = [];
+  let stack = [root];
+  let visited = new Set;
   
-  const dfs = (node: TreeNode | null): void => {
-    if (node === null) return;
-    
-    dfs(node.left);
-    seq.push(node.val);
-    dfs(node.right);
+  while(stack.length > 0) {
+    const node = stack.pop();
+    if (visited.has(node)) {
+      seq.push(node.val);
+    } else {
+      visited.add(node);
+      node.right && stack.push(node.right);
+      stack.push(node); 
+      node.left && stack.push(node.left);
+    }
   }
-  
-  dfs(root);
   
   return seq;
 };
