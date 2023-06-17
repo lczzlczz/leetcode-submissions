@@ -1,6 +1,6 @@
-type Interval = number[];
+type Interval = [number, number];
 
-function merge(intervals: number[][]): number[][] {
+function merge(intervals: Interval[]): number[][] {
   if (intervals.length === 1) return intervals; 
 
   let res = [];
