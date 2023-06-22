@@ -9,7 +9,6 @@ var isHappy = function(n) {
       sum += Math.pow(n % 10, 2);
       n = Math.floor(n / 10);
     }
-    if (sum === 1) return true;
     n = sum;
   }
   return n === 1 || n === 7? true: false;
