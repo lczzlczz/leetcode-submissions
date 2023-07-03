@@ -12,41 +12,39 @@
  * @return {ListNode}
  */
 var reverseBetween = function(head, left, right) {
-  const dummy = new ListNode(null);
-  dummy.next = head;
+  const dummyHead = new ListNode(null);
+  dummyHead.next = head;
 
-  let prev = dummy;
-  for (let i = 0; i < left - 1; i++) {
+  let prev = dummyHead;
+  for (let i = 1; i < left; i++) {
     prev = prev.next;
+  } 
+
+  head = prev.next;
+  const rightNode = head;
+
+  for (let i = left; i < right; i++) {
+    head = head.next;
   }
 
-  let rightNode = prev;
-  for (let i = 0; i < right - left + 1; i++) {
-    rightNode = rightNode.next;
-  }
+  const leftNode = head;
+  const succNode = head?.next;
 
-  let leftNode = prev.next;
-  let succNode = rightNode.next;
+  leftNode.next = null;
+  reverse(rightNode);
 
-  rightNode.next = null;
+  // connection
+  prev.next = leftNode;
+  rightNode.next = succNode;
 
-  reverseList(leftNode);
-
-  prev.next = rightNode;
-  leftNode.next = succNode;
-
-  return dummy.next;
+  return dummyHead.next;
 };
 
-const reverseList = head => {
+const reverse = head => {
+  if (head === null) return head;
+
   let prev = null;
-  while (head) { 
-    const next = head.next;
-
-    head.next = prev;
-    prev = head;
-    head = next;
+  while (head !== null) {
+    [head.next, prev, head] = [prev, head, head.next];
   }
-
-  return prev;
 }
