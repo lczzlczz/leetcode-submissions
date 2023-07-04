@@ -20,7 +20,5 @@ var removeDuplicates = function(nums) {
     }
   }
 
-  if (nums[p] !== nums[nums.length - 1]) nums[p] = nums[nums.length - 1];
-
   return p + 1;
 };
