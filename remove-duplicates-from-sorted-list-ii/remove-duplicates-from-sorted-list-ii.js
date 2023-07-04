@@ -10,40 +10,33 @@
  * @return {ListNode}
  */
 var deleteDuplicates = function(head) {
+  // empty or only 1 element
   if (head === null || head.next === null) return head;
 
+  // create dummy node to access head
   let dummyHead = new ListNode();
   dummyHead.next = head;
 
-  const uniques = [];
-  let duplicated = false;
-  while (head !== null && head.next !== null) {
-    if (head.val === head.next.val) {
-      uniques.push(0);
-      duplicated = true;
-    } else {
-      uniques.push(!duplicated? 1: 0)
-      duplicated = false;
-    }
-    head = head.next;
-  }
-
-  uniques.push(!duplicated ? 1: 0);
-
+  // create curr to iterate linked list
+  let curr = head;  
   let prev = dummyHead;
-  head = dummyHead.next;
-  dummyHead = prev;
+  dummyHead.next  = prev;
 
-
-  for (const key of uniques) {
-    if (key) {
-      prev.next = head;
+  while (curr !== null && curr.next !== null) {
+    if (curr.val === curr.next.val) {
+      const duplicatedValue = curr.val;
+      while (curr !== null && curr.val === duplicatedValue) {
+        curr = curr.next;
+      }
+    } else {
+      prev.next = curr;
       prev = prev.next;
+      curr = curr.next;
     }
-    head = head.next;
   }
 
-  prev.next = head;
+  // link prev -> curr
+  prev.next = curr;
 
   return dummyHead.next;
 };
