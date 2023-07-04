@@ -11,43 +11,39 @@
  */
 var deleteDuplicates = function(head) {
   if (head === null || head.next === null) return head;
-  const dummyHead = new ListNode(null);
+
+  let dummyHead = new ListNode();
   dummyHead.next = head;
 
-  const nums = [];
+  const uniques = [];
   let duplicated = false;
-  let prev = new ListNode(null);
-  prev.next = head;
-  while (head && head.next) {
+  while (head !== null && head.next !== null) {
     if (head.val === head.next.val) {
+      uniques.push(0);
       duplicated = true;
-      nums.push(0);
     } else {
-      if (duplicated) {
-        nums.push(0);
-      } else {
-        nums.push(1);
-      }
+      uniques.push(!duplicated? 1: 0)
       duplicated = false;
     }
-    prev = prev.next;
     head = head.next;
   }
-  nums.push(prev.val === head.val ? 0: 1);
 
-  let p = new ListNode(null);
-  let curr = dummyHead.next;
-  dummyHead.next = p;
+  uniques.push(!duplicated ? 1: 0);
 
-  for (let i = 0; i < nums.length; i++) {
-    if (nums[i]) {
-      p.next = curr;
-      p = p.next;
+  let prev = dummyHead;
+  head = dummyHead.next;
+  dummyHead = prev;
+
+
+  for (const key of uniques) {
+    if (key) {
+      prev.next = head;
+      prev = prev.next;
     }
-    curr = curr.next;
+    head = head.next;
   }
 
-  p.next = null;
+  prev.next = head;
 
-  return dummyHead.next.next;
+  return dummyHead.next;
 };
