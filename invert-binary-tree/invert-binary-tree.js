@@ -13,12 +13,7 @@
 var invertTree = function(root) {
    const dfs = node => {
      if (node === null) return;
-
-     const left = invertTree(root.right);
-     const right = invertTree(root.left);
-
-     root.left = left;
-     root.right = right;
+     [root.left, root.right] = [invertTree(root.right), invertTree(root.left)];
    } 
 
    dfs(root);
