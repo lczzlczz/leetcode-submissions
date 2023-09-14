@@ -9,17 +9,16 @@
 
 
 function guessNumber(n: number): number {
-  let [left, right] = [0, n];
+  let [left, right] = [-1, n];
 
   while (left < right) {
-    const number = Math.floor((left + right) / 2);
+    const number = Math.floor((left + right + 1) / 2);
 
-    if (guess(number) === 0) return number;
-
-    if (guess(number) === - 1) {
-      right = number;
+    const guessNumber = guess(number);
+    if (guessNumber === 0 || guessNumber === 1) {
+      left = number;
     } else {
-      left = number + 1;
+      right = number - 1;
     }
   }
 
